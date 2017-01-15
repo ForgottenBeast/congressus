@@ -4,10 +4,13 @@ require_once '../../../engine/authenticators/GaletteAuthenticator.php';
 
 class GaletteAuthenticatorTest extends PHPUnit_Framework_TestCase{
 	private static $database = "test_db";
-	
+	private $pdo;
+
+	protected function setUp(){
+	    $this->pdo = new MockPDO();
+    }
 	public function testInstanciation(){
-		$pdo = new MockPDO();
-		$auth = GaletteAuthenticator::newInstance($pdo, GaletteAuthenticatorTest::$database);
-		$this->assertTrue($auth->pdo == $pdo,"passed pdo is used");
+		$auth = GaletteAuthenticator::newInstance($this->pdo, GaletteAuthenticatorTest::$database);
+		$this->assertTrue($auth->pdo == $this->pdo,"passed pdo is used");
 	}
 }
